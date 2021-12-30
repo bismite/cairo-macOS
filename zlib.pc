@@ -1,0 +1,5 @@
+Name: zlib
+Description: interface of the 'zlib' general purpose compression library
+Version: 1.2.11
+Libs: -lz
+

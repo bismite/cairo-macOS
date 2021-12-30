@@ -1,0 +1,28 @@
+name: Build Release
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  Build-Release:
+    runs-on: macos-10.15
+    env:
+      SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: ./download.sh
+      - run: ./make-pkg-config.sh
+      - run: ./make-libpng.sh
+      - run: ./make-freetype.sh
+      - run: ./make-pixman.sh
+      - run: ./make-cairo.sh
+      - run: ./release.sh
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: release/cairo-macOS.tgz
+          asset_name: cairo-macOS.tgz
+          tag: ${{ github.ref }}
+          overwrite: true
