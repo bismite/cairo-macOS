@@ -24,7 +24,7 @@ mv build/lib/libpng16.16.dylib build/libpng16.16.x86_64.dylib
 
 (
   cd build/libpng-1.6.37-arm64
-  ./configure --prefix=${PREFIX} --enable-static=no CFLAGS="-g0 -O2 -arch arm64" LDFLAGS="-arch arm64"
+  ./configure --prefix=${PREFIX} --enable-static=no --host=x86_64-apple-darwin CFLAGS="-g0 -O2 -arch arm64" LDFLAGS="-arch arm64"
   make install
 )
 
