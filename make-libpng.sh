@@ -22,9 +22,15 @@ cp zlib.pc build/lib/pkgconfig/
 
 mv build/lib/libpng16.16.dylib build/libpng16.16.x86_64.dylib
 
+ARCH=uname -m
 (
   cd build/libpng-1.6.37-arm64
-  ./configure --prefix=${PREFIX} --enable-static=no --enable-arm-neon=yes --host=x86_64-apple-darwin CFLAGS="-g0 -O2 -arch arm64" LDFLAGS="-arch arm64"
+  if [ ${ARCH} = "arm64" ]
+  then
+    ./configure --prefix=${PREFIX} --enable-static=no --enable-arm-neon=yes CFLAGS="-g0 -O2 -arch arm64" LDFLAGS="-arch arm64"
+  else
+    ./configure --prefix=${PREFIX} --enable-static=no --enable-arm-neon=yes --host=x86_64-apple-darwin CFLAGS="-g0 -O2 -arch arm64" LDFLAGS="-arch arm64"
+  fi
   make install
 )
 
